@@ -19,7 +19,6 @@ connectDB();
 
 app.use(cors());
 
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/users", userRoute);
@@ -28,8 +27,11 @@ app.use("/interview", interviewRoute);
 app.use("/ai", aiRoute);
 app.use("/attempts", attemptRoute);
 
-
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+app.use("/", (req, res) => {
+  res.json("Hello From Server");
+});
 
 const PORT = process.env.PORT;
 app.listen(PORT, (err) =>
