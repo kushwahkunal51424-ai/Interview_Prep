@@ -144,7 +144,7 @@ const loginUser = async (req, res) => {
       },
     );
 
-    return res.status(200).json({ msg: "Login Successfull", token });
+    return res.status(200).json({ msg: "Login Successfull", user, token });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "Internal Server Error" });
@@ -175,7 +175,7 @@ const updateProfile = async (req, res) => {
 
     let userData = req.body;
 
-    if (!userData || Object.keys(userData).length === 0  && !req.file) {
+    if (!userData || (Object.keys(userData).length === 0 && !req.file)) {
       return res
         .status(400)
         .json({ msg: "Bad Request! Enter Data to Update." });
@@ -250,8 +250,8 @@ const updateProfile = async (req, res) => {
     }
 
     // Profile Image
-    if(req.file){
-      userData.profileImage = req.file.filename
+    if (req.file) {
+      userData.profileImage = req.file.filename;
     }
 
     let updatedUserProfile = await UserModel.findByIdAndUpdate(

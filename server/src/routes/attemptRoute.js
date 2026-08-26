@@ -9,10 +9,15 @@ const {
   getMyAttempts,
   getSingleAttempt,
   getMyAnalytics,
+  getAllAttempts,
 } = require("../controllers/attemptController");
 
-const { authentication } = require("../middlewares/auth");
+const { authentication, authorization } = require("../middlewares/auth");
 
+// Admin
+router.get("/all-attempts", authentication, authorization, getAllAttempts);
+
+// User
 router.post("/start-interview/:interviewId", authentication, startInterview);
 router.post("/:attemptId/questions", authentication, addQuestionsToAttempt);
 router.put(
@@ -24,6 +29,7 @@ router.post("/:attemptId/complete", authentication, completeInterview);
 
 router.get("/my-attempts", authentication, getMyAttempts);
 router.get("/:attemptId", authentication, getSingleAttempt);
-router.get("/my-analytics", authentication, getMyAnalytics);
+router.get("/analytics/my-analytics", authentication, getMyAnalytics);
+
 
 module.exports = router;
